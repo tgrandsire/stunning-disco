@@ -7,6 +7,7 @@ import { GameRepository } from './game-repository.service';
 	templateUrl: './game.component.html'
 })
 export class GameComponent implements OnInit {
+    count: number = 0;
     games: any[] = [];
     error: string = '';
 
@@ -18,6 +19,13 @@ export class GameComponent implements OnInit {
             .subscribe(
                 data => this.games = data,
                 error => this.error = error.message
+            );
+
+        this.gameRepository
+            .count()
+            .subscribe(
+                data => this.count = data,
+                error => this.error += error.message
             );
     }
 }
