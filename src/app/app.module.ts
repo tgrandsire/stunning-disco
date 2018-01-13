@@ -13,6 +13,7 @@ import { AuthenticationService } from './authentication/authentication.service';
 import { HomepageComponent } from './homepage/homepage.component';
 import { GameComponent } from './game/game.component';
 import { GameRepository } from './game/game-repository.service';
+import { TenThousandComponent } from './game/ten-thousand/ten-thousand.component';
 
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
     return new AuthHttp( new AuthConfig({
@@ -27,7 +28,8 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
         AppComponent,
         AuthenticationComponent,
         HomepageComponent,
-        GameComponent
+        GameComponent,
+        TenThousandComponent
      ],
     imports: [
         BrowserModule,

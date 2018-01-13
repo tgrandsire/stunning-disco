@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import { tokenNotExpired } from 'angular2-jwt';
+import { ApiVariable } from '../api-variable';
 
 import 'rxjs/add/operator/map';
 
@@ -10,10 +11,10 @@ export class AuthenticationService {
 	constructor(private http: Http) {}
 
 	authenticate(user: any) {
-		let url     = 'http://local.grandsire.org/app_dev.php/login_check';
+		let url     = ApiVariable.BASE + '/login_check';
 		let body    = new URLSearchParams();
-		body.append('username', user.username);
-		body.append('password', user.password);
+		body.append('_username', user.username);
+		body.append('_password', user.password);
 		let headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
 		let options = new RequestOptions({headers: headers});
 

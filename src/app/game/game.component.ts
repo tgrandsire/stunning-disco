@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { GameRepository } from './game-repository.service';
+import { Game } from './model';
 
 @Component({
 	selector: 'app-game',
@@ -8,7 +9,7 @@ import { GameRepository } from './game-repository.service';
 })
 export class GameComponent implements OnInit {
     count: number = 0;
-    games: any[] = [];
+    games: Game[] = [];
     error: string = '';
 
     constructor(private gameRepository: GameRepository) {}
