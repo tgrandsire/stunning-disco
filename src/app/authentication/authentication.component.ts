@@ -9,29 +9,31 @@ import { AuthenticationService } from './authentication.service';
   templateUrl: './authentication.component.html',
 })
 export class AuthenticationComponent {
-    loginForm: FormGroup;
-    error: string = '';
+  protected loginForm: FormGroup;
+  protected error: string = '';
 
-    constructor(
-        private formBuilder: FormBuilder,
-        private authenticationService: AuthenticationService,
-        private router: Router
-    ) {
-        this.loginForm = formBuilder.group({
-            'username': ['', Validators.required],
-            'password': ['', Validators.required]
-        });
-    }
+  constructor(
+    private formBuilder: FormBuilder,
+    private authenticationService: AuthenticationService,
+    private router: Router
+  ) {
+    this.loginForm = formBuilder.group({
+      'username': ['', Validators.required],
+      'password': ['', Validators.required]
+    });
+  }
 
-    onSubmit() {
-        this.authenticationService
-            .authenticate(this.loginForm.value)
-            .subscribe(
-                data => {
-                    localStorage.setItem('id_token', data.token);
-                    this.router.navigate(['game']);
-                },
-                error => this.error = error.message
-            );
-    }
+  onSubmit() {
+    this.authenticationService
+      .authenticate(this.loginForm.value)
+      .subscribe(response => {
+        if (typeof response['token'] != 'undefined') {
+          localStorage.setItem('id_token', response['token']);
+          this.router.navigate(['game']);
+        }
+      }, error => {
+        this.error = error.message
+      })
+    ;
+  }
 }

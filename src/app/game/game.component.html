@@ -8,5 +8,9 @@
 <ul>
 	<li *ngFor="let game of games">
 		<a>{{ game.name }}</a>
+		<ul>
+			<li>{{ game|json }}</li>
+			<li>{{ game.id }}</li>
+		</ul>
 	</li>
 </ul>

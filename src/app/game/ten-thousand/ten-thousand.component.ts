@@ -6,7 +6,7 @@ import { Play, Player } from '../model';
 @Component({
 	selector: 'app-ten-thousand',
 	templateUrl: './ten-thousand.component.html',
-	styleUrls: ['./ten-thousand.component.css']
+	styleUrls: ['./ten-thousand.component.scss']
 })
 export class TenThousandComponent implements OnInit {
 	play: Play;
@@ -16,9 +16,5 @@ export class TenThousandComponent implements OnInit {
 
 	ngOnInit() {
 
-	}
-
-	createPlay => () {
-		this.play = new Play();
 	}
 }
