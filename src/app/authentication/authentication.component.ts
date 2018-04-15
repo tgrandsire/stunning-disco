@@ -24,16 +24,8 @@ export class AuthenticationComponent {
   }
 
   onSubmit() {
-    this.authenticationService
-      .authenticate(this.loginForm.value)
-      .subscribe(response => {
-        if (typeof response['token'] != 'undefined') {
-          localStorage.setItem('id_token', response['token']);
-          this.router.navigate(['game']);
-        }
-      }, error => {
-        this.error = error.message
-      })
-    ;
+    if (this.authenticationService.authenticate(this.loginForm.value)) {
+      this.router.navigate(['game']);
+    }
   }
 }

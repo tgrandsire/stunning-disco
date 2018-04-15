@@ -9,14 +9,17 @@ import { AuthenticationService } from './authentication/authentication.service';
 })
 export class AppComponent {
 
-    constructor(private authenticationService: AuthenticationService, private router: Router) {}
+  constructor(
+  	private authenticationService: AuthenticationService,
+  	private router: Router
+  ) {}
 
-    hasAuthToken() {
-		return localStorage.getItem('id_token') !== null;
-    }
+  hasAuthToken(): boolean {
+		return localStorage.getItem('access_token') !== null;
+  }
 
-    logout() {
+  logout(): void {
 		this.authenticationService.logout();
 		this.router.navigate(['home']);
-    }
+  }
 }

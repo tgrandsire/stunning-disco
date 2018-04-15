@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
+import { ApiVariable } from '../api-variable';
+
 import { GameRepository } from './game-repository.service';
 import { Game } from './model';
 
@@ -9,14 +11,13 @@ import { Game } from './model';
 	templateUrl: './game.component.html'
 })
 export class GameComponent implements OnInit {
-    protected count: Observable<number>;
-    protected games: Observable<Game[]>;
-    protected error: string = '';
+  protected count: Observable<number>;
+  protected games: Observable<Game[]>;
 
-    constructor(private gameRepository: GameRepository) {}
+  constructor(private gameRepository: GameRepository) {}
 
-    ngOnInit() {
-        this.games = this.gameRepository.getList();
-        this.count = this.gameRepository.count();
-    }
+  ngOnInit() {
+    this.games = this.gameRepository.cget();
+    this.count = this.gameRepository.count();
+  }
 }

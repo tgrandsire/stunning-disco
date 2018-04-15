@@ -17,30 +17,30 @@ export class AuthenticationService {
 	) { }
 
 	authenticate(user: any) {
-		let url = ApiVariable.BASE + '/login_check';
-		// let body    = new URLSearchParams();
-		// body.append('_username', user.username);
-		// body.append('_password', user.password);
-		let body = {
+		let url: string = ApiVariable.BASE + '/login_check';
+		let body: Object = {
 			'_username': user.username,
 			'_password': user.password,
 		};
-		let headers = new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'});
-		// let options = new RequestOptions({headers: headers});
+		let headers: HttpHeaders = new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'});
 
-		return this.http
-			// .post(url, body.toString(), options)
+		this.http
 			.post(url, '_username=' + user.username + '&_password=' + user.password, {headers: headers})
-			// .map((response: Observable<any>) => response)
+			.subscribe(response => {
+				if (typeof response['token'] !== 'undefined') {
+					localStorage.setItem('access_token', response['token']);
+				}
+			})
 		;
+
+		return true;
 	}
 
 	logout() {
-		localStorage.removeItem('id_token');
+		localStorage.removeItem('access_token');
 	}
 
 	loggedIn() {
-		// return tokenNotExpired('id_token');
-		return ! this.jwtHelper.isTokenExpired();
+		return !this.jwtHelper.isTokenExpired(localStorage.getItem('access_token'));
 	}
 }
