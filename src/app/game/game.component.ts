@@ -11,13 +11,13 @@ import { Game } from './model';
 	templateUrl: './game.component.html'
 })
 export class GameComponent implements OnInit {
-  protected count: Observable<number>;
-  protected games: Observable<Game[]>;
+  protected count$: Observable<number>;
+  protected games$: Observable<Game[]>;
 
   constructor(private gameRepository: GameRepository) {}
 
   ngOnInit() {
-    this.games = this.gameRepository.cget();
-    this.count = this.gameRepository.count();
+    this.games$ = this.gameRepository.cget();
+    this.count$ = this.gameRepository.count();
   }
 }

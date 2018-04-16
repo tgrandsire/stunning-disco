@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
-import { TenThousandRepository } from './ten-thousand-repository.service';
 import { Play, Player } from '../model';
 
 @Component({
@@ -9,8 +9,8 @@ import { Play, Player } from '../model';
 	styleUrls: ['./ten-thousand.component.scss']
 })
 export class TenThousandComponent implements OnInit {
-	play: Play;
-	players: Player[] = [];
+	protected play$: Observable<Play>;
+	protected players$: Observable<Player[]>;
 
 	constructor() { }
 

@@ -16,10 +16,6 @@ import { GameComponent } from './game/game.component';
 import { GameRepository } from './game/game-repository.service';
 import { TenThousandComponent } from './game/ten-thousand/ten-thousand.component';
 
-export function tokenGetter() {
-  return localStorage.getItem('access_token');
-}
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,9 +31,11 @@ export function tokenGetter() {
     HttpClientModule,
     JwtModule.forRoot({
       config: {
-        tokenGetter: tokenGetter,
-        whitelistedDomains: ['localhost:4200'],
-        blacklistedRoutes: ['localhost:4200/auth/']
+        tokenGetter: () => {
+          return localStorage.getItem('access_token');
+        },
+        whitelistedDomains: ['grandsire.local'],
+        blacklistedRoutes: ['grandsire.local/auth']
       }
     }),
   ],

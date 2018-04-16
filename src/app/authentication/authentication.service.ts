@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
-// import { Http, Response, Headers, RequestOptions, URLSearchParams } from '@angular/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
-// import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Observable';
 
 import { ApiVariable } from '../api-variable';
-
 
 @Injectable()
 export class AuthenticationService {

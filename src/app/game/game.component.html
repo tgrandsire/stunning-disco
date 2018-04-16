@@ -1,11 +1,7 @@
 <!-- post/post.component.html -->
-<h1>Games ({{ count }})</h1>
+<h1>Games ({{ count$|async }})</h1>
 <ul>
-	<li *ngFor="let game of games|async">
+	<li *ngFor="let game of games$|async">
 		<a>{{ game.name }}</a>
-		<ul>
-			<li>{{ game|json }}</li>
-			<li>{{ game.id }}</li>
-		</ul>
 	</li>
 </ul>
