@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { AuthenticationService } from './authentication.service';
@@ -17,9 +17,9 @@ export class AuthenticationComponent {
     private authenticationService: AuthenticationService,
     private router: Router
   ) {
-    this.loginForm = formBuilder.group({
-      'username': ['', Validators.required],
-      'password': ['', Validators.required]
+    this.loginForm = this.formBuilder.group({
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required]]
     });
   }
 

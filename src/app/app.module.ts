@@ -4,6 +4,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
 
+import { MatToolbarModule } from '@angular/material/toolbar';
+
 import { AppComponent } from './app.component';
 import { Routing } from './app.routing';
 import { AuthGuard } from './_guard/index';
@@ -23,7 +25,7 @@ import { TenThousandComponent } from './game/ten-thousand/ten-thousand.component
     HomepageComponent,
     GameComponent,
     TenThousandComponent,
-   ],
+  ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
@@ -38,6 +40,7 @@ import { TenThousandComponent } from './game/ten-thousand/ten-thousand.component
         blacklistedRoutes: ['grandsire.local/auth']
       }
     }),
+    MatToolbarModule
   ],
   providers: [
     AuthGuard,
