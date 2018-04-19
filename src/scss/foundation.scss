@@ -48,7 +48,7 @@
 // @import 'components/drilldown';
 // @import 'components/dropdown-menu';
 // @import 'components/dropdown';
-// @import 'components/flex';
+@import '~foundation-sites/scss/components/flex';
 // @import 'components/responsive-embed';
 // @import 'components/label';
 // @import 'components/media-object';
@@ -127,7 +127,7 @@
   // @include foundation-float-classes;
 
   // @if $flex {
-  //   @include foundation-flex-classes;
+    @include foundation-flex-classes;
   // }
 
   // @if $prototype {

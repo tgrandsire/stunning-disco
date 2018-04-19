@@ -7,13 +7,17 @@ import { ApiVariable } from '../api-variable';
 
 @Injectable()
 export class AuthenticationService {
+	// token name must be the same as the tokenGetter function in app.module.ts
+	private readonly tokenName = 'access_token';
+
+	private username: string;
 
 	constructor(
 		private http: HttpClient,
-		public jwtHelper: JwtHelperService
+		private jwtHelper: JwtHelperService
 	) { }
 
-	authenticate(user: any) {
+	authenticate(user: any): boolean {
 		let url: string = ApiVariable.BASE + '/login_check';
 		let body: Object = {
 			'_username': user.username,
@@ -25,7 +29,8 @@ export class AuthenticationService {
 			.post(url, '_username=' + user.username + '&_password=' + user.password, {headers: headers})
 			.subscribe(response => {
 				if (typeof response['token'] !== 'undefined') {
-					localStorage.setItem('access_token', response['token']);
+					localStorage.setItem(this.tokenName, response['token']);
+					this.username = user.username;
 				}
 			})
 		;
@@ -33,11 +38,30 @@ export class AuthenticationService {
 		return true;
 	}
 
-	logout() {
-		localStorage.removeItem('access_token');
+	/**
+	 * Gets its token
+	 *
+	 * @return {string}
+	 */
+	public getToken(): string {
+		return localStorage.getItem(this.tokenName);
 	}
 
-	loggedIn() {
-		return !this.jwtHelper.isTokenExpired(localStorage.getItem('access_token'));
+	/**
+	 * Logouts the current user
+	 *
+	 * @return {void}
+	 */
+	logout(): void {
+		localStorage.removeItem(this.tokenName);
+	}
+
+	/**
+	 * Returns whether the user is connected
+	 *
+	 * @return {boolean}
+	 */
+	public isAuthenticated(): boolean {
+		return !this.jwtHelper.isTokenExpired(this.getToken());
 	}
 }

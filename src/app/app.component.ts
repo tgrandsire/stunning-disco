@@ -11,13 +11,9 @@ import { AuthenticationService } from './authentication/authentication.service';
 export class AppComponent {
 
   constructor(
-  	private authenticationService: AuthenticationService,
+  	public authenticationService: AuthenticationService,
   	private router: Router
   ) {}
-
-  hasAuthToken(): boolean {
-		return localStorage.getItem('access_token') !== null;
-  }
 
   logout(): void {
 		this.authenticationService.logout();

@@ -1,7 +1,9 @@
 <mat-toolbar color="primary">
-  <span>Grandsire</span>
+  <a routerLink="home">Grandsire</a>
   <span style="flex: 1 1 auto;"></span>
-  <span>Connexion</span>
+  <a routerLink="login" *ngIf="!authenticationService.isAuthenticated()">Connexion</a>
+  <span *ngIf="authenticationService.isAuthenticated()">{{ authenticationService.username }}</span>
+  <a *ngIf="authenticationService.isAuthenticated()" (click)="logout()">Logout</a>
 </mat-toolbar>
 
 <router-outlet></router-outlet>
