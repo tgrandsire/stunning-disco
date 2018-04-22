@@ -24,8 +24,12 @@ export class AuthenticationComponent {
   }
 
   submitLoginForm() {
-    if (this.authenticationService.authenticate(this.loginForm.value)) {
+    this.authenticationService.authenticate(this.loginForm.value).subscribe(r => {
       setTimeout(() => this.router.navigate(['game']));
-    }
+    }, error => {
+      this.error = 'Bad Credentials';
+    });
   }
+
+
 }

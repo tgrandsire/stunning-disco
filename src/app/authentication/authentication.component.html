@@ -4,6 +4,11 @@
 			<mat-card>
 				<form [formGroup]="loginForm" (ngSubmit)="submitLoginForm()">
 					<mat-card-title>Connexion</mat-card-title>
+					<div class="grid-x" style="margin: 1em 0">
+						<div class="cell shrink">
+							<mat-error>{{ error }}</mat-error>
+						</div>
+					</div>
 					<mat-card-content>
 						<div class="grid-x grid-margin-x align-center align-middle">
 							<div class="cell shrink">

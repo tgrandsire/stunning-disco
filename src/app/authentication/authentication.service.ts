@@ -17,7 +17,7 @@ export class AuthenticationService {
 		private jwtHelper: JwtHelperService
 	) { }
 
-	authenticate(user: any): boolean {
+	authenticate(user: any): any {
 		let url: string = ApiVariable.BASE + '/login_check';
 		let body: Object = {
 			'_username': user.username,
@@ -25,17 +25,15 @@ export class AuthenticationService {
 		};
 		let headers: HttpHeaders = new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'});
 
-		this.http
+		return this.http
 			.post(url, '_username=' + user.username + '&_password=' + user.password, {headers: headers})
-			.subscribe(response => {
+			.map(response => {
 				if (typeof response['token'] !== 'undefined') {
 					localStorage.setItem(this.tokenName, response['token']);
 					this.username = user.username;
 				}
 			})
 		;
-
-		return true;
 	}
 
 	/**
