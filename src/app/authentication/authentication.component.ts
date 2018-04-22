@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -23,9 +23,9 @@ export class AuthenticationComponent {
     });
   }
 
-  onSubmit() {
+  submitLoginForm() {
     if (this.authenticationService.authenticate(this.loginForm.value)) {
-      this.router.navigate(['game']);
+      setTimeout(() => this.router.navigate(['game']));
     }
   }
 }

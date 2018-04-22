@@ -2,9 +2,9 @@
 	<div class="grid-x grid-margin-x align-middle align-center">
 		<div class="cell shrink">
 			<mat-card>
-				<mat-card-title>Connexion</mat-card-title>
-				<mat-card-content>
-					<form [formGroup]="loginForm" (submit)="onSubmit()">
+				<form [formGroup]="loginForm" (ngSubmit)="submitLoginForm()">
+					<mat-card-title>Connexion</mat-card-title>
+					<mat-card-content>
 						<div class="grid-x grid-margin-x align-center align-middle">
 							<div class="cell shrink">
 								<mat-icon>account_circle</mat-icon>
@@ -26,12 +26,12 @@
 							</div>
 						</div>
 						<div class="grid-x grid-margin-x align-center">
-							<div class="cell">
-								<button mat-raised-button [disabled]="!loginForm.valid">Se connecter</button>
+							<div class="cell shrink">
+								<button mat-raised-button color="primary">Se connecter</button>
 							</div>
 						</div>
-					</form>
-				</mat-card-content>
+					</mat-card-content>
+				</form>
 			</mat-card>
 		</div>
 	</div>

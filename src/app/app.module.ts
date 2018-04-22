@@ -8,6 +8,7 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
 import { AppComponent } from './app.component';
@@ -50,6 +51,7 @@ export function tokenGetter() {
     MatToolbarModule,
     MatCardModule,
     MatInputModule,
+    MatButtonModule,
     MatIconModule
   ],
   providers: [
