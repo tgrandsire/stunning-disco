@@ -9,7 +9,7 @@ import { AuthenticationService } from './authentication.service';
   templateUrl: './authentication.component.html',
 })
 export class AuthenticationComponent {
-  protected loginForm: FormGroup;
+  public loginForm: FormGroup;
   protected error: string = '';
 
   constructor(

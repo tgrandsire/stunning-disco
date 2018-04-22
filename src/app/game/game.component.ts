@@ -11,8 +11,8 @@ import { Game } from './model';
 	templateUrl: './game.component.html'
 })
 export class GameComponent implements OnInit {
-  protected count$: Observable<number>;
-  protected games$: Observable<Game[]>;
+  public count$: Observable<number>;
+  public games$: Observable<Game[]>;
 
   constructor(private gameRepository: GameRepository) {}
 
