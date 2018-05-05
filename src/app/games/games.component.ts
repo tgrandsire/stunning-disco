@@ -20,7 +20,6 @@ export class GamesComponent implements OnInit {
   ngOnInit() {
     this.gameRepository.cget()
       .subscribe(games => {
-        console.log(games);
         this.games = games;
       })
     ;

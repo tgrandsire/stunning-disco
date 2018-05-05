@@ -48,7 +48,7 @@ export class TenThousandComponent implements OnInit {
 
 	addPlayer() {
 		let player = {
-			play: this.play._id
+			play: this.play['@id']
 		};
 
 		player = Object.assign(new Player(), player);

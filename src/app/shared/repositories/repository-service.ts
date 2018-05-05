@@ -21,7 +21,13 @@ export class RepositoryService {
 				return response[ApiVariable.COLLECTION_MEMBER];
 			})
 			.map(response => {
-				return this.transformResource(response);
+				let objects = [];
+
+				for (var object of response) {
+					objects.push(this.transformResource(object));
+				}
+
+				return objects;
 			})
 			.catch(error => this.handleError(error))
 		;
@@ -57,8 +63,8 @@ export class RepositoryService {
 
 	protected handleError(error: any) {
 		if (error instanceof Response) {
-	      return Observable.throw(error.json()['error'] || 'backend server error');
-	    }
+      return Observable.throw(error.json()['error'] || 'backend server error');
+    }
 
 		return Observable.throw(error || 'backend server error');
 	}
@@ -69,8 +75,6 @@ export class RepositoryService {
 
 	protected thingify(resource: any): Thing {
 		let thing = new Thing();
-		thing._id = resource["@id"];
-		thing._type = resource["@type"];
 
 		return Object.assign(thing, resource);
 	}
