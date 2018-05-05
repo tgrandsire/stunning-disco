@@ -1,0 +1,26 @@
+<div class="grid-container">
+	<div class="grid-x grid-margin-x align-center align-middle">
+		<div class="cell">
+			<h1>10 000</h1>
+			<ng-container *ngIf="!play">
+				<button mat-raised-button (click)="newGame()" >New Game</button>
+			</ng-container>
+			<ng-container *ngIf="play">
+				<ng-container *ngIf="!play.isStarted">
+					<form [formGroup]="playerForm" (submit)="addPlayer()">
+						<mat-form-field>
+							<input matInput placeholder="player name" formControlName="name">
+						</mat-form-field>
+
+						<button mat-raised-button type="submit">Ajouter</button>
+					</form>
+				</ng-container>
+				<div class="grid-x grid-margin-x">
+					<div class="cell auto" *ngFor="let player of players">
+						{{ player.name }}
+					</div>
+				</div>
+			</ng-container>
+		</div>
+	</div>
+</div>

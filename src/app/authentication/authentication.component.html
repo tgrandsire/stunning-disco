@@ -1,43 +1,43 @@
 <div class="grid-container" style="margin-top: 4em;">
-	<div class="grid-x grid-margin-x align-middle align-center">
-		<div class="cell shrink">
-			<mat-card>
-				<form [formGroup]="loginForm" (ngSubmit)="submitLoginForm()">
-					<mat-card-title>Connexion</mat-card-title>
-					<div class="grid-x" style="margin: 1em 0">
-						<div class="cell shrink">
-							<mat-error>{{ error }}</mat-error>
-						</div>
-					</div>
-					<mat-card-content>
-						<div class="grid-x grid-margin-x align-center align-middle">
-							<div class="cell shrink">
-								<mat-icon>account_circle</mat-icon>
-							</div>
-							<div class="cell auto">
-								<mat-form-field>
-									<input matInput placeholder="Username*" formControlName="username">
-								</mat-form-field>
-							</div>
-						</div>
-						<div class="grid-x grid-margin-x align-center align-middle">
-							<div class="cell shrink">
-								<mat-icon>lock</mat-icon>
-							</div>
-							<div class="cell auto">
-								<mat-form-field>
-									<input matInput type="password" placeholder="Password*" formControlName="password">
-								</mat-form-field>
-							</div>
-						</div>
-						<div class="grid-x grid-margin-x align-center">
-							<div class="cell shrink">
-								<button mat-raised-button color="primary">Se connecter</button>
-							</div>
-						</div>
-					</mat-card-content>
-				</form>
-			</mat-card>
-		</div>
-	</div>
+  <div class="grid-x grid-margin-x align-middle align-center">
+    <div class="cell shrink">
+      <mat-card>
+        <form [formGroup]="loginForm" (ngSubmit)="submitLoginForm()">
+          <mat-card-title>Connexion</mat-card-title>
+          <div class="grid-x" style="margin: 1em 0;">
+            <div class="cell shrink">
+              <mat-error>{{ error }}</mat-error>
+            </div>
+          </div>
+          <mat-card-content>
+            <div class="grid-x grid-margin-x align-center align-middle">
+              <div class="cell shrink">
+                <mat-icon>account_circle</mat-icon>
+              </div>
+              <div class="cell auto">
+                <mat-form-field>
+                  <input matInput placeholder="Username*" formControlName="username">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="grid-x grid-margin-x align-center align-middle">
+              <div class="cell shrink">
+                <mat-icon>lock</mat-icon>
+              </div>
+              <div class="cell auto">
+                <mat-form-field>
+                  <input matInput type="password" placeholder="Password*" formControlName="password">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="grid-x grid-margin-x align-center">
+              <div class="cell shrink">
+                <button mat-raised-button color="primary">Se connecter</button>
+              </div>
+            </div>
+          </mat-card-content>
+        </form>
+      </mat-card>
+    </div>
+  </div>
 </div>

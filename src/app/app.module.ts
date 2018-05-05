@@ -2,7 +2,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtModule } from '@auth0/angular-jwt';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -17,11 +17,15 @@ import { AuthGuard } from './_guard/index';
 
 import { AuthenticationComponent } from './authentication/authentication.component';
 import { AuthenticationService } from './authentication/authentication.service';
-import { RepositoryService } from './shared/repositories/repository-service';
+import { RefreshTokenInterceptor } from './authentication/refresh-token.interceptor';
 import { HomepageComponent } from './homepage/homepage.component';
-import { GameComponent } from './game/game.component';
-import { GameRepository } from './game/game-repository.service';
-import { TenThousandComponent } from './game/ten-thousand/ten-thousand.component';
+import { GamesComponent } from './games/games.component';
+import { TenThousandComponent } from './games/ten-thousand/ten-thousand.component';
+
+import { RepositoryService } from './shared/repositories/repository-service';
+import { GameRepository } from './games/repositories/game-repository.service';
+import { PlayRepository } from './games/repositories/play-repository.service';
+import { NamedPlayerRepository } from './games/repositories/named-player-repository.service';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -32,7 +36,7 @@ export function tokenGetter() {
     AppComponent,
     AuthenticationComponent,
     HomepageComponent,
-    GameComponent,
+    GamesComponent,
     TenThousandComponent,
   ],
   imports: [
@@ -57,7 +61,14 @@ export function tokenGetter() {
   providers: [
     AuthGuard,
     AuthenticationService,
-    GameRepository
+    GameRepository,
+    PlayRepository,
+    NamedPlayerRepository,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: RefreshTokenInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
