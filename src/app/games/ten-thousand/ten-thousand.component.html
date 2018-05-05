@@ -9,10 +9,12 @@
 				<ng-container *ngIf="!play.isStarted">
 					<form [formGroup]="playerForm" (submit)="addPlayer()">
 						<mat-form-field>
-							<input matInput placeholder="player name" formControlName="name">
+							<input matInput placeholder="Player name" formControlName="name">
+							<mat-error *ngIf="playerForm.hasError('required', 'name')">Name required</mat-error>
+							<mat-error *ngIf="playerForm.hasError('minlength', 'name')">Name must be at least 3 characters long</mat-error>
 						</mat-form-field>
 
-						<button mat-raised-button type="submit">Ajouter</button>
+						<button mat-raised-button type="submit" [disabled]="!playerForm.valid">Ajouter</button>
 					</form>
 				</ng-container>
 				<div class="grid-x grid-margin-x">

@@ -42,7 +42,7 @@ export class TenThousandComponent implements OnInit {
 		;
 
 		this.playerForm = this.formBuilder.group({
-			name: ['', Validators.required]
+			name: ['', [Validators.required, Validators.minLength(3)]]
 		});
 	}
 
@@ -58,9 +58,8 @@ export class TenThousandComponent implements OnInit {
 			.post(player)
 			.subscribe(response => {
 				this.players.push(response);
-				this.playerForm.patchValue({
-					name: ''
-				});
+				this.playerForm.reset({name: ''});
+				this.playerForm.controls['name'].setErrors(null);
 			})
 		;
 	}
