@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 
+import { ApiVariable } from '../../api-variable';
 import { Play, Player } from '../model';
 import { PlayRepository } from '../repositories/play-repository.service';
 import { NamedPlayerRepository } from '../repositories/named-player-repository.service';
@@ -48,7 +49,7 @@ export class TenThousandComponent implements OnInit {
 
 	addPlayer() {
 		let player = {
-			play: this.play['@id']
+			play: this.play[ApiVariable.OBJECT_ID]
 		};
 
 		player = Object.assign(new Player(), player);
