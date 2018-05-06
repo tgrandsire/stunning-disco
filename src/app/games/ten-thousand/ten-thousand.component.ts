@@ -14,7 +14,6 @@ import { NamedPlayerRepository } from '../repositories/named-player-repository.s
 })
 export class TenThousandComponent implements OnInit {
 	protected play: Play;
-	protected players: Player[] = [];
 	protected playerForm: FormGroup;
 	protected scoreForm: FormGroup;
 
@@ -37,8 +36,8 @@ export class TenThousandComponent implements OnInit {
 
 		this.playRepository
 			.post(play)
-			.subscribe(response => {
-				this.play = response;
+			.subscribe((play: Play) => {
+				this.play = play;
 			})
 		;
 
@@ -57,14 +56,28 @@ export class TenThousandComponent implements OnInit {
 
 		this.namedPlayerRepository
 			.post(player)
-			.subscribe(response => {
-				this.players.push(response);
+			.subscribe(player => {
+				this.play.players.push(player);
 				this.playerForm.reset({name: ''});
 				this.playerForm.controls['name'].setErrors(null);
 
 				this.playerForm.controls['name'].markAsPristine();
-		        this.playerForm.controls['name'].markAsUntouched();
-		        this.playerForm.updateValueAndValidity();
+        this.playerForm.controls['name'].markAsUntouched();
+        this.playerForm.updateValueAndValidity();
+			})
+		;
+	}
+
+	startPlay() {
+		let play = {
+			id: this.play.id,
+			stage: 1
+		};
+
+		this.playRepository
+			.patch(play)
+			.subscribe((play: Play) => {
+				this.play = play;
 			})
 		;
 	}

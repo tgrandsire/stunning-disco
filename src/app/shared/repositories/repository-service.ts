@@ -61,6 +61,16 @@ export class RepositoryService {
 		;
 	}
 
+	patch(data: any, url?: string): Observable<any> {
+		var url = url || this.url;
+
+		return this.http
+			.put(url + '/' + data.id, data)
+			.map(this.transformResource, this)
+			.catch(error => this.handleError(error))
+		;
+	}
+
 	protected handleError(error: any) {
 		if (error instanceof Response) {
       return Observable.throw(error.json()['error'] || 'backend server error');
@@ -78,4 +88,5 @@ export class RepositoryService {
 
 		return Object.assign(thing, resource);
 	}
+
 }

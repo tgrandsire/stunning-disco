@@ -8,4 +8,8 @@ import { Play } from '../model';
 @Injectable()
 export class PlayRepository extends RepositoryService {
   protected readonly url: string = ApiVariable.BASE + '/plays';
+
+  transformResource(resource: any): Play {
+  	return Object.assign(new Play(), resource);
+  }
 }
