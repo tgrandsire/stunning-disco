@@ -61,6 +61,10 @@ export class TenThousandComponent implements OnInit {
 				this.players.push(response);
 				this.playerForm.reset({name: ''});
 				this.playerForm.controls['name'].setErrors(null);
+
+				this.playerForm.controls['name'].markAsPristine();
+		        this.playerForm.controls['name'].markAsUntouched();
+		        this.playerForm.updateValueAndValidity();
 			})
 		;
 	}

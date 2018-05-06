@@ -14,7 +14,7 @@
 							<mat-error *ngIf="playerForm.hasError('minlength', 'name')">Name must be at least 3 characters long</mat-error>
 						</mat-form-field>
 
-						<button mat-raised-button type="submit" [disabled]="!playerForm.valid">Ajouter</button>
+						<button mat-raised-button type="submit" [disabled]="!playerForm.valid || playerForm.controls.name.value == ''">Ajouter</button>
 					</form>
 				</ng-container>
 				<div class="grid-x grid-margin-x">
