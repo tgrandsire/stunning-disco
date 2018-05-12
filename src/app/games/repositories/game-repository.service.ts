@@ -10,9 +10,7 @@ import { Game } from '../model';
 export class GameRepository extends RepositoryService {
 	protected readonly url: string = ApiVariable.BASE + '/games';
 
-	protected transformResource(thing: Thing): Game {
-		let game = this.thingify(thing);
-
-		return Object.assign(new Game(), game);
-	}
+	protected transformResource(resource: any): Game {
+  	return Object.assign(new Game(), resource);
+  }
 }
