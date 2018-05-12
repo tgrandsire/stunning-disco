@@ -32,11 +32,32 @@
 						</div>
 					</div>
 				</ng-container>
-				<div class="grid-x grid-margin-x" *ngIf="play.isStarted">
-					<div class="cell auto" *ngFor="let player of play.players">
-						{{ player.name }}
+				<ng-container *ngIf="play.isStarted">
+					<form [formGroup]="scoreForm">
+						<div class="grid-x grid-margin-x">
+							<div class="cell medium-4">
+								<mat-form-field>
+									<mat-select formControlName="player" placeholder="Player">
+										<mat-option *ngFor="let player of play.players" value="player.id">{{ player.name }}</mat-option>
+									</mat-select>
+								</mat-form-field>
+							</div>
+							<div class="cell medium-4">
+								<mat-form-field>
+									<input matInput formControlName="score" placeholder="score" steps="50">
+								</mat-form-field>
+							</div>
+							<div class="cell medium-4">
+								<button mat-raised-button color="primary" [disabled]="!scoreForm.valid">Score !</button>
+							</div>
+						</div>
+					</form>
+					<div class="grid-x grid-margin-x">
+						<div class="cell auto" *ngFor="let player of play.players">
+							{{ player.name }}
+						</div>
 					</div>
-				</div>
+				</ng-container>
 			</ng-container>
 		</div>
 	</div>

@@ -16,19 +16,36 @@ export class TenThousandComponent implements OnInit {
 	protected play: Play;
 	protected playerForm: FormGroup;
 	protected scoreForm: FormGroup;
+	protected selectedPlayer: Player;
 
+	/**
+	 * Constructor
+	 *
+	 * @param {FormBuilder}           formBuilder
+	 * @param {PlayRepository}        playRepository
+	 * @param {NamedPlayerRepository} namedPlayerRepository
+	 */
 	constructor(
 		protected formBuilder: FormBuilder,
 		protected playRepository: PlayRepository,
 		protected namedPlayerRepository: NamedPlayerRepository
 	) { }
 
+	/**
+	 * {@inheritdoc}
+	 */
 	ngOnInit() {
 		this.scoreForm = this.formBuilder.group({
-			score: ['', Validators.required]
+			score: ['', [Validators.required, Validators.pattern(/[0-9]+/), Validators.max(10000), this.validateScoreDivisibleBy50]],
+			player: [null, Validators.required]
 		});
 	}
 
+	/**
+	 * Creates a new Game (Play)
+	 *
+	 * @return {void}
+	 */
 	newGame() {
 		let play = {
 			game: '/api/games/5'
@@ -46,6 +63,11 @@ export class TenThousandComponent implements OnInit {
 		});
 	}
 
+	/**
+	 * Adds a player
+	 *
+	 * @return {void}
+	 */
 	addPlayer() {
 		let player = {
 			play: this.play[ApiVariable.OBJECT_ID]
@@ -68,6 +90,11 @@ export class TenThousandComponent implements OnInit {
 		;
 	}
 
+	/**
+	 * Starts the play
+	 *
+	 * @return {void}
+	 */
 	startPlay() {
 		let play = {
 			id: this.play.id,
@@ -80,9 +107,31 @@ export class TenThousandComponent implements OnInit {
 				this.play = play;
 			})
 		;
+
+		this.scoreForm.patchValue({player: this.play.players[0][ApiVariable.OBJECT_ID]});
 	}
 
+	/**
+	 * Validation for score
+	 *
+	 * @param {FormControl} input
+	 *
+	 * @return any|null
+	 */
+	validateScoreDivisibleBy50(input: FormControl) {
+		const isDivisibleBy50 = parseInt(input.value)%50 == 0;
+
+		return isDivisibleBy50 ? null : { isDivisibleBy50: false };
+	}
+
+	/**
+	 * Adds a score
+	 *
+	 * @return {void}
+	 */
 	addScore() {
 		//
 	}
+
+
 }
