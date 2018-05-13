@@ -3,9 +3,10 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { Observable } from 'rxjs/Observable';
 
 import { ApiVariable } from '../../api-variable';
-import { Play, Player } from '../model';
+import { Play, Player, ScoredTurn, NamedPlayer } from '../model';
 import { PlayRepository } from '../repositories/play-repository.service';
 import { NamedPlayerRepository } from '../repositories/named-player-repository.service';
+import { ScoredTurnRepository } from '../repositories/scored-turn-repository.service';
 
 @Component({
 	selector: 'app-ten-thousand',
@@ -16,7 +17,6 @@ export class TenThousandComponent implements OnInit {
 	protected play: Play;
 	protected playerForm: FormGroup;
 	protected scoreForm: FormGroup;
-	protected selectedPlayer: Player;
 
 	/**
 	 * Constructor
@@ -24,11 +24,13 @@ export class TenThousandComponent implements OnInit {
 	 * @param {FormBuilder}           formBuilder
 	 * @param {PlayRepository}        playRepository
 	 * @param {NamedPlayerRepository} namedPlayerRepository
+	 * @param {ScoredTurnRepository}  scoredTurnRepository
 	 */
 	constructor(
 		protected formBuilder: FormBuilder,
 		protected playRepository: PlayRepository,
-		protected namedPlayerRepository: NamedPlayerRepository
+		protected namedPlayerRepository: NamedPlayerRepository,
+		protected scoredTurnRepository: ScoredTurnRepository
 	) { }
 
 	/**
@@ -78,14 +80,14 @@ export class TenThousandComponent implements OnInit {
 
 		this.namedPlayerRepository
 			.post(player)
-			.subscribe(player => {
-				this.play.players.push(player);
+			.subscribe((player: Player) => {
+				this.play.players.push(<Player>player);
 				this.playerForm.reset({name: ''});
 				this.playerForm.controls['name'].setErrors(null);
 
 				this.playerForm.controls['name'].markAsPristine();
-        this.playerForm.controls['name'].markAsUntouched();
-        this.playerForm.updateValueAndValidity();
+				this.playerForm.controls['name'].markAsUntouched();
+				this.playerForm.updateValueAndValidity();
 			})
 		;
 	}
@@ -130,8 +132,29 @@ export class TenThousandComponent implements OnInit {
 	 * @return {void}
 	 */
 	addScore() {
-		//
+		let scoredTurn = this.scoreForm.value;
+		scoredTurn['score'] = parseInt(scoredTurn['score']);
+
+		let playerId = scoredTurn['player'];
+
+		this.scoredTurnRepository
+			.post(scoredTurn)
+			.subscribe((scoredTurn: ScoredTurn) => {
+				let player = this.retrievePlayer(playerId);
+				player.turns.push(scoredTurn);
+				player.score += scoredTurn.score;
+			})
+		;
 	}
 
+	retrievePlayer(id: string): Player {
+		for (let player of this.play.players) {
+			if (player[ApiVariable.OBJECT_ID] == id) {
+				return player;
+			}
+		}
+
+		return null;
+	}
 
 }

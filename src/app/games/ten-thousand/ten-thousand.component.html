@@ -6,6 +6,7 @@
 				<button mat-raised-button (click)="newGame()" >New Game</button>
 			</ng-container>
 			<ng-container *ngIf="play">
+				{{ play | json }}
 				<ng-container *ngIf="!play.isStarted">
 					<div class="grid-x grid-margin-x">
 						<div class="cell medium-4">
@@ -33,12 +34,14 @@
 					</div>
 				</ng-container>
 				<ng-container *ngIf="play.isStarted">
-					<form [formGroup]="scoreForm">
+					<form [formGroup]="scoreForm" (submit)="addScore()">
 						<div class="grid-x grid-margin-x">
 							<div class="cell medium-4">
 								<mat-form-field>
 									<mat-select formControlName="player" placeholder="Player">
-										<mat-option *ngFor="let player of play.players" value="player.id">{{ player.name }}</mat-option>
+										<ng-container *ngFor="let player of play.players">
+											<mat-option [value]="player['@id']">{{ player.name }}</mat-option>
+										</ng-container>
 									</mat-select>
 								</mat-form-field>
 							</div>
@@ -54,7 +57,15 @@
 					</form>
 					<div class="grid-x grid-margin-x">
 						<div class="cell auto" *ngFor="let player of play.players">
-							{{ player.name }}
+							<h6>{{ player.name }}</h6>
+							<h3>{{ player.score }}</h3>
+						</div>
+					</div>
+					<div class="grid-x grid-margin-x">
+						<div class="cell auto" *ngFor="let player of play.players">
+							<div *ngFor="let turn of player.turns" class="">
+								{{ turn.score }} points
+							</div>
 						</div>
 					</div>
 				</ng-container>

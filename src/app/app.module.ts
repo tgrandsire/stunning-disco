@@ -27,6 +27,7 @@ import { RepositoryService } from './shared/repositories/repository-service';
 import { GameRepository } from './games/repositories/game-repository.service';
 import { PlayRepository } from './games/repositories/play-repository.service';
 import { NamedPlayerRepository } from './games/repositories/named-player-repository.service';
+import { ScoredTurnRepository } from './games/repositories/scored-turn-repository.service';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -66,6 +67,7 @@ export function tokenGetter() {
     GameRepository,
     PlayRepository,
     NamedPlayerRepository,
+    ScoredTurnRepository,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: RefreshTokenInterceptor,
