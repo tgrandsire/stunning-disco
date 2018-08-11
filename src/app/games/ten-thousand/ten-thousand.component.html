@@ -85,7 +85,7 @@
                 <li>
                   {{ turn.score }} points
                   <ng-container *ngIf="!play.isEnded">
-                    <button mat-icon-button aria-label="Delete">
+                    <button mat-icon-button aria-label="Delete" (click)="removeScore(player, turn)">
                       <mat-icon>close</mat-icon>
                     </button>
                   </ng-container>
