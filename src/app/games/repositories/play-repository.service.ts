@@ -10,6 +10,6 @@ export class PlayRepository extends RepositoryService {
   protected readonly url: string = ApiVariable.BASE + '/plays';
 
   protected transformResource(resource: any): Play {
-  	return Object.assign(new Play(), resource);
+    return Object.assign(new Play(), resource);
   }
 }

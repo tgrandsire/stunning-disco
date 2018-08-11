@@ -1,75 +1,75 @@
 <div class="grid-container">
-	<div class="grid-x grid-margin-x align-center align-middle">
-		<div class="cell">
-			<h1>10 000</h1>
-			<ng-container *ngIf="!play">
-				<button mat-raised-button (click)="newGame()" >New Game</button>
-			</ng-container>
-			<ng-container *ngIf="play">
-				{{ play | json }}
-				<ng-container *ngIf="!play.isStarted">
-					<div class="grid-x grid-margin-x">
-						<div class="cell medium-4">
-							<form [formGroup]="playerForm" (submit)="addPlayer()">
-								<mat-form-field>
-									<input matInput placeholder="Player name" formControlName="name">
-									<mat-error *ngIf="playerForm.hasError('required', 'name')">Name required</mat-error>
-									<mat-error *ngIf="playerForm.hasError('minlength', 'name')">Name must be at least 3 characters long</mat-error>
-								</mat-form-field>
+  <div class="grid-x grid-margin-x align-center align-middle">
+    <div class="cell">
+      <h1>10 000</h1>
+      <ng-container *ngIf="!play">
+        <button mat-raised-button (click)="newGame()" >New Game</button>
+      </ng-container>
+      <ng-container *ngIf="play">
+        {{ play | json }}
+        <ng-container *ngIf="!play.isStarted">
+          <div class="grid-x grid-margin-x">
+            <div class="cell medium-4">
+              <form [formGroup]="playerForm" (submit)="addPlayer()">
+                <mat-form-field>
+                  <input matInput placeholder="Player name" formControlName="name">
+                  <mat-error *ngIf="playerForm.hasError('required', 'name')">Name required</mat-error>
+                  <mat-error *ngIf="playerForm.hasError('minlength', 'name')">Name must be at least 3 characters long</mat-error>
+                </mat-form-field>
 
-								<button mat-raised-button type="submit" [disabled]="!playerForm.valid || playerForm.controls.name.value == ''">Ajouter</button>
-							</form>
-						</div>
-						<div class="cell medium-4">
-							<h2>Players</h2>
-							<ul>
-								<li *ngFor="let player of play.players">
-									{{ player.name }}
-								</li>
-							</ul>
-						</div>
-						<div class="cell medium-4">
-							<button mat-raised-button color="primary" (click)="startPlay()">Start game !</button>
-						</div>
-					</div>
-				</ng-container>
-				<ng-container *ngIf="play.isStarted">
-					<form [formGroup]="scoreForm" (submit)="addScore()">
-						<div class="grid-x grid-margin-x">
-							<div class="cell medium-4">
-								<mat-form-field>
-									<mat-select formControlName="player" placeholder="Player">
-										<ng-container *ngFor="let player of play.players">
-											<mat-option [value]="player['@id']">{{ player.name }}</mat-option>
-										</ng-container>
-									</mat-select>
-								</mat-form-field>
-							</div>
-							<div class="cell medium-4">
-								<mat-form-field>
-									<input matInput formControlName="score" placeholder="score" steps="50">
-								</mat-form-field>
-							</div>
-							<div class="cell medium-4">
-								<button mat-raised-button color="primary" [disabled]="!scoreForm.valid">Score !</button>
-							</div>
-						</div>
-					</form>
-					<div class="grid-x grid-margin-x">
-						<div class="cell auto" *ngFor="let player of play.players">
-							<h6>{{ player.name }}</h6>
-							<h3>{{ player.score }}</h3>
-						</div>
-					</div>
-					<div class="grid-x grid-margin-x">
-						<div class="cell auto" *ngFor="let player of play.players">
-							<div *ngFor="let turn of player.turns" class="">
-								{{ turn.score }} points
-							</div>
-						</div>
-					</div>
-				</ng-container>
-			</ng-container>
-		</div>
-	</div>
+                <button mat-raised-button type="submit" [disabled]="!playerForm.valid || playerForm.controls.name.value == ''">Ajouter</button>
+              </form>
+            </div>
+            <div class="cell medium-4">
+              <h2>Players</h2>
+              <ul>
+                <li *ngFor="let player of play.players">
+                  {{ player.name }}
+                </li>
+              </ul>
+            </div>
+            <div class="cell medium-4">
+              <button mat-raised-button color="primary" (click)="startPlay()">Start game !</button>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="play.isStarted">
+          <form [formGroup]="scoreForm" (submit)="addScore()">
+            <div class="grid-x grid-margin-x">
+              <div class="cell medium-4">
+                <mat-form-field>
+                  <mat-select formControlName="player" placeholder="Player">
+                    <ng-container *ngFor="let player of play.players">
+                      <mat-option [value]="player['@id']">{{ player.name }}</mat-option>
+                    </ng-container>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="cell medium-4">
+                <mat-form-field>
+                  <input matInput formControlName="score" placeholder="score" steps="50">
+                </mat-form-field>
+              </div>
+              <div class="cell medium-4">
+                <button mat-raised-button color="primary" [disabled]="!scoreForm.valid">Score !</button>
+              </div>
+            </div>
+          </form>
+          <div class="grid-x grid-margin-x">
+            <div class="cell auto" *ngFor="let player of play.players">
+              <h6>{{ player.name }}</h6>
+              <h3>{{ player.score }}</h3>
+            </div>
+          </div>
+          <div class="grid-x grid-margin-x">
+            <div class="cell auto" *ngFor="let player of play.players">
+              <div *ngFor="let turn of player.turns" class="">
+                {{ turn.score }} points
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
 </div>

@@ -8,9 +8,9 @@ import { Game } from '../model';
 
 @Injectable()
 export class GameRepository extends RepositoryService {
-	protected readonly url: string = ApiVariable.BASE + '/games';
+  protected readonly url: string = ApiVariable.BASE + '/games';
 
-	protected transformResource(resource: any): Game {
-  	return Object.assign(new Game(), resource);
+  protected transformResource(resource: any): Game {
+    return Object.assign(new Game(), resource);
   }
 }
