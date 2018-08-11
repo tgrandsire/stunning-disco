@@ -71,6 +71,16 @@ export class RepositoryService {
 		;
 	}
 
+	delete(data: any, url?: string): Observable<any> {
+		var url = url || this.url;
+
+		return this.http
+			.delete(url + '/' + data.id)
+			.map(this.transformResource, this)
+			.catch(error => this.handleError(error))
+		;
+	}
+
 	protected handleError(error: any) {
 		if (error instanceof Response) {
       return Observable.throw(error.json()['error'] || 'backend server error');

@@ -1,6 +1,3 @@
-export const ApiVariable = Object.freeze({
-	BASE: 'http://grandsire.local/api',
-
-	COLLECTION_MEMBER: 'hydra:member',
-	COLLECTION_COUNT:  'hydra:totalItems'
+export const AppVariable = Object.freeze({
+    SNACK_BAR_DEFAULT_OPTIONS: {duration: 2000}
 });

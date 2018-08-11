@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 
 import { ApiVariable } from '../../api-variable';
+import { AppVariable } from '../../app-variable';
 import { Play, Player, ScoredTurn, NamedPlayer } from '../model';
 import { PlayRepository } from '../repositories/play-repository.service';
 import { NamedPlayerRepository } from '../repositories/named-player-repository.service';
@@ -27,6 +29,7 @@ export class TenThousandComponent implements OnInit {
    * @param {ScoredTurnRepository}  scoredTurnRepository
    */
   constructor(
+    protected snackBar: MatSnackBar,
     protected formBuilder: FormBuilder,
     protected playRepository: PlayRepository,
     protected namedPlayerRepository: NamedPlayerRepository,
@@ -92,6 +95,15 @@ export class TenThousandComponent implements OnInit {
     ;
   }
 
+  removePlayer(player) {
+    this.namedPlayerRepository
+      .delete(player)
+      .subscribe(() => {
+        this.play.players = this.play.players.filter(playPlayer => playPlayer !== player );
+      })
+    ;
+  }
+
   /**
    * Starts the play
    *
@@ -100,7 +112,7 @@ export class TenThousandComponent implements OnInit {
   startPlay() {
     let play = {
       id: this.play.id,
-      stage: 1
+      stage: this.play.progress
     };
 
     this.playRepository
@@ -111,6 +123,23 @@ export class TenThousandComponent implements OnInit {
     ;
 
     this.scoreForm.patchValue({player: this.play.players[0][ApiVariable.OBJECT_ID]});
+
+    this.snackBar.open('Game is started ! Good luck !', null, AppVariable.SNACK_BAR_DEFAULT_OPTIONS);
+  }
+
+
+  finishPlay() {
+    let play = {
+      id: this.play.id,
+      stage: this.play.ended
+    };
+
+    this.playRepository
+      .patch(play)
+      .subscribe((play: Play) => {
+        this.play = play;
+      })
+    ;
   }
 
   /**
@@ -121,7 +150,7 @@ export class TenThousandComponent implements OnInit {
    * @return any|null
    */
   validateScoreDivisibleBy50(input: FormControl) {
-    const isDivisibleBy50 = parseInt(input.value)%50 == 0;
+    const isDivisibleBy50 = parseInt(input.value) % 50 == 0;
 
     return isDivisibleBy50 ? null : { isDivisibleBy50: false };
   }
@@ -133,16 +162,34 @@ export class TenThousandComponent implements OnInit {
    */
   addScore() {
     let scoredTurn = this.scoreForm.value;
-    scoredTurn['score'] = parseInt(scoredTurn['score']);
+    let score = parseInt(scoredTurn['score']);
+    if (score <= 0) {
+      return;
+    }
+
+    scoredTurn['play'] = this.play[ApiVariable.OBJECT_ID];
+    scoredTurn['score'] = score;
 
     let playerId = scoredTurn['player'];
+    let player = this.retrievePlayer(playerId);
+    if (player.score == 0 && score < 1000) {
+      this.snackBar.open('The first score of a player must be at least 1000.', null, AppVariable.SNACK_BAR_DEFAULT_OPTIONS);
+
+      return;
+    }
 
     this.scoredTurnRepository
       .post(scoredTurn)
       .subscribe((scoredTurn: ScoredTurn) => {
-        let player = this.retrievePlayer(playerId);
+        // let player = this.retrievePlayer(playerId);
         player.turns.push(scoredTurn);
         player.score += scoredTurn.score;
+
+        this.scoreForm.patchValue({score: ''});
+
+        if (player.score == 10000) {
+          this.finishPlay();
+        }
       })
     ;
   }

@@ -3,10 +3,9 @@
     <div class="cell">
       <h1>10 000</h1>
       <ng-container *ngIf="!play">
-        <button mat-raised-button (click)="newGame()" >New Game</button>
-      </ng-container>
+          <button mat-raised-button (click)="newGame()" >New Game</button>
+        </ng-container>
       <ng-container *ngIf="play">
-        {{ play | json }}
         <ng-container *ngIf="!play.isStarted">
           <div class="grid-x grid-margin-x">
             <div class="cell medium-4">
@@ -25,15 +24,18 @@
               <ul>
                 <li *ngFor="let player of play.players">
                   {{ player.name }}
+                  <button mat-icon-button aria-label="Delete" (click)="removePlayer(player)">
+                    <mat-icon>close</mat-icon>
+                  </button>
                 </li>
               </ul>
             </div>
             <div class="cell medium-4">
-              <button mat-raised-button color="primary" (click)="startPlay()">Start game !</button>
+              <button mat-raised-button color="primary" (click)="startPlay()" [disabled]="play.players.length < 2">Start game !</button>
             </div>
           </div>
         </ng-container>
-        <ng-container *ngIf="play.isStarted">
+        <ng-container *ngIf="play.isStarted && !play.isEnded">
           <form [formGroup]="scoreForm" (submit)="addScore()">
             <div class="grid-x grid-margin-x">
               <div class="cell medium-4">
@@ -55,6 +57,22 @@
               </div>
             </div>
           </form>
+        </ng-container>
+        <ng-container *ngIf="play.isEnded">
+          Game over
+          <h2>The winner is</h2>
+          <h1>
+            <ng-container *ngFor="let player of play.players">
+              <ng-container *ngIf="player.score == 10000">
+                {{ player.name }}
+              </ng-container>
+            </ng-container>
+          </h1>
+        </ng-container>
+        <ng-container *ngIf="play.isEnded">
+          <button mat-raised-button (click)="newGame()" >New Game</button>
+        </ng-container>
+        <ng-container *ngIf="play.isStarted || play.isEnded">
           <div class="grid-x grid-margin-x">
             <div class="cell auto" *ngFor="let player of play.players">
               <h6>{{ player.name }}</h6>
@@ -64,7 +82,14 @@
           <div class="grid-x grid-margin-x">
             <div class="cell auto" *ngFor="let player of play.players">
               <div *ngFor="let turn of player.turns" class="">
-                {{ turn.score }} points
+                <li>
+                  {{ turn.score }} points
+                  <ng-container *ngIf="!play.isEnded">
+                    <button mat-icon-button aria-label="Delete">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </ng-container>
+                </li>
               </div>
             </div>
           </div>
