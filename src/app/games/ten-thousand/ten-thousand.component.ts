@@ -172,7 +172,13 @@ export class TenThousandComponent implements OnInit {
 
     // checking the score that must be at least 1000 for the first score of player, except -500 value which is nenette
     if (score != -500 && player.score <= 0 && score < 1000) {
-      this.snackBar.open('The first score of a player must be at least 1000.', null, AppVariable.SNACK_BAR_DEFAULT_OPTIONS);
+      this.snackBar.open('The first score of a player must be at least 1000', null, AppVariable.SNACK_BAR_DEFAULT_OPTIONS);
+
+      return;
+    }
+
+    if (player.score + score > 10000) {
+      this.snackBar.open('Too much, sorry', null, AppVariable.SNACK_BAR_DEFAULT_OPTIONS);
 
       return;
     }
